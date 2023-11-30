@@ -1,10 +1,10 @@
 <?php
 
 // Verifica se o arquivo db.php existe
-if (file_exists('db.php')) {
+if (file_exists('../db.php')) {
     
     // Inclui o arquivo db.php
-    include('db.php');
+    include('../db.php');
 
     // Conecta ao banco de dados usando as informações de db.php
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -22,7 +22,8 @@ if (file_exists('db.php')) {
         tag VARCHAR(255),
         view INT DEFAULT 0,
         `like` INT DEFAULT 0,
-        date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        type VARCHAR(255) NULL
     )";
     
 
