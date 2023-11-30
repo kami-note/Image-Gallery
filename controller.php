@@ -1,6 +1,4 @@
 <?php
- // Controller.php
-
  error_reporting(E_ALL);
  ini_set('display_errors', 1);
  
@@ -36,7 +34,7 @@ function processUpload() {
             }
         
             if ($_FILES["file"]["size"] > 2000000) {
-                echo "Desculpe, seu arquivo é muito grande.";
+                echo "Sorry, your file is too big.";
                 return;
             }
 
@@ -52,23 +50,23 @@ function processUpload() {
                 echo "Incerido " . $uploadedFileExtension;
 
                 if ($stmt->execute()) {
-                    echo "O arquivo " . htmlspecialchars($fileName) . " foi enviado com sucesso.";
+                    echo "The file " . htmlspecialchars($fileName) . " has been sent successfully.";
                     header("Location: " . $_SERVER['REQUEST_URI']);
                     exit();
                 } else {
-                    echo "Erro ao inserir dados: " . $stmt->error;
+                    echo "Error inserting data: " . $stmt->error;
                     echo "Debug info: ";
                     var_dump($stmt->error_list);
                 }
 
                 $stmt->close();
             } else {
-                echo "Desculpe, houve um erro ao enviar o seu arquivo.";
+                echo "Sorry, there was an error uploading your file.";
                 echo "Debug info: ";
                 var_dump($_FILES["file"]["error"]);
             }
         } else {
-            echo "Desculpe, nenhum arquivo foi enviado.";
+            echo "Sorry, no files were uploaded.";
         }
     }
 }

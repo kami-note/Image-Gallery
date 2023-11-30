@@ -1,6 +1,5 @@
 <?php
-// config.php
 $url = 'localhost/Image-Gallery/';
-$perPage = 25; // Number of images per page
+$perPage = 25;
 $directory = 'public/images/uploads/';
 ?>

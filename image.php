@@ -10,14 +10,14 @@
         $checkIDResult = mysqli_query($conn, $checkIDSql);
     
         if (!$checkIDResult) {
-            die("Erro na verificação do ID: " . mysqli_error($conn));
+            die("ID verification error:" . mysqli_error($conn));
         }
     
         $countRow = mysqli_fetch_assoc($checkIDResult);
         $idCount = $countRow['count'];
     
         if ($idCount == 0) {
-            die("ID não encontrado no banco de dados.");
+            die("ID not found in database.");
         }
     } else {
         header("Location: index.php");
@@ -29,7 +29,7 @@
     $result = mysqli_query($conn, $sql);
     
     if (!$result) {
-        die("Erro na consulta: " . mysqli_error($conn));
+        die("Query error:" . mysqli_error($conn));
     }
     
     $row = mysqli_fetch_assoc($result);
