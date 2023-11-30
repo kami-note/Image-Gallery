@@ -14,9 +14,10 @@ function generateUniqueFilename($fileExtension) {
 
 function processUpload() {
     global $conn;
+    global $directory;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $targetDir = 'public/images/uploads/';
+        $targetDir = $directory;
         $fileTypeInDatabase = '';
 
         if (isset($_FILES["file"]) && is_uploaded_file($_FILES["file"]["tmp_name"])) {
