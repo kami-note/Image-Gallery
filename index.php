@@ -16,7 +16,7 @@
 </head>
 <body>
     <header class="flex backdrop-blur-3xl bg-white/30 sm:px-60 px-5 border-b sm:pt-4 pt-4 pb-4 sticky top-0 z-30">
-        <div class="border-2 border-gray-300 rounded-lg overflow-hidden">
+        <div class="border border-gray-300 rounded-lg overflow-hidden">
             <form class="relative mx-auto text-gray-600 flex" method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="flex items-center">
                     <input class="border-0 bg-white h-10 px-5 pr-16 text-sm focus:outline-none" type="text" name="tags" id="tags" placeholder="Search by Tag" value="<?php echo isset($_GET['tags']) ? $_GET['tags'] : ''; ?>">
@@ -48,17 +48,17 @@
                     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data" id="uploadForm">
                         <div class="mb-4">
                             <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
-                            <input type="file" name="file" id="file" accept="image/*" required class="border-2 border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
+                            <input type="file" name="file" id="file" accept="image/*" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
                         </div>
 
                         <div class="mb-4">
                             <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-                            <textarea name="description" id="description" class="border-2 border-gray-300 p-2 w-full rounded-md resize-none focus:outline-none focus:border-blue-500"></textarea>
+                            <textarea name="description" id="description" class="border border-gray-300 p-2 w-full rounded-md resize-none focus:outline-none focus:border-blue-500"></textarea>
                         </div>
 
                         <div class="mb-4">
                             <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tag:</label>
-                            <input type="text" name="tags" id="tags" required class="border-2 border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
+                            <input type="text" name="tags" id="tags" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
                         </div>
 
                         <div class="mt-4 flex justify-end">
