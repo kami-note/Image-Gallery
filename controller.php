@@ -72,23 +72,50 @@ function processUpload() {
     }
 }
 
-processUpload();
+function filterPages($filter, $page, $perPage, $conn) {
+    $offset = ($page - 1) * $perPage;
+
+    // Determine sorting order based on filter
+    $sorting = ($filter == 'recent') ? 'ORDER BY id DESC' : 'ORDER BY id ASC';
+
+    // Get filter values from GET parameters
+    $tag = isset($_GET['tags']) ? $_GET['tags'] : '';
+    $type = isset($_GET['type']) ? $_GET['type'] : '';
+
+    // Initialize WHERE clauses
+    $tagClause = '';
+    $typeClause = '';
+
+    // Build WHERE clauses based on filter values
+    if ($tag !== '') {
+        $tagClause = "AND LOWER(tags) LIKE LOWER('%$tag%')";
+    }
+
+    if ($type !== '') {
+        $typeClause = "AND type = '$type'";
+    }
+
+    // Build and execute the SQL query
+    $selectSql = "SELECT * FROM images WHERE 1 $tagClause $typeClause $sorting LIMIT $offset, $perPage";
+    $result = $conn->query($selectSql);
+
+    return array('result' => $result, 'tagClause' => $tagClause, 'typeClause' => $typeClause);
+}
 
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'recent';
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-$offset = ($currentPage - 1) * $perPage;
 
-$sorting = ($filter == 'recent') ? 'ORDER BY id DESC' : 'ORDER BY id ASC';
+// Call the filterPages function
+$filterPagesResult = filterPages($filter, $currentPage, $perPage, $conn);
 
-$tag = isset($_GET['tags']) ? $_GET['tags'] : '';
-$tagClause = ($tag !== '') ? "AND LOWER(tags) LIKE LOWER('%$tag%')" : '';
-
-$type = isset($_GET['type']) ? $_GET['type'] : '';
-$typeClause = ($type !== '') ? "AND type = '$type'" : '';
-
-$selectSql = "SELECT * FROM images WHERE 1 $tagClause $typeClause $sorting LIMIT $offset, $perPage";
-$result = $conn->query($selectSql);
+// Access the result, tagClause, and typeClause
+$result = $filterPagesResult['result'];
+$tagClause = $filterPagesResult['tagClause'];
+$typeClause = $filterPagesResult['typeClause'];
 
 $totalRecords = $conn->query("SELECT COUNT(*) as total FROM images WHERE 1 $tagClause $typeClause")->fetch_assoc()['total'];
 $totalPages = ceil($totalRecords / $perPage);
+
+processUpload();
+
 ?>
