@@ -1,3 +1,47 @@
+<?php
+    include 'db.php';
+
+    if(isset($_GET['imageid'])) {
+        $imageID = $_GET['imageid'];
+        
+        $imageID = intval($imageID);
+    
+        $checkIDSql = "SELECT COUNT(*) as count FROM `images` WHERE `id` = $imageID";
+        $checkIDResult = mysqli_query($conn, $checkIDSql);
+    
+        if (!$checkIDResult) {
+            die("Erro na verificação do ID: " . mysqli_error($conn));
+        }
+    
+        $countRow = mysqli_fetch_assoc($checkIDResult);
+        $idCount = $countRow['count'];
+    
+        if ($idCount == 0) {
+            die("ID não encontrado no banco de dados.");
+        }
+    } else {
+        header("Location: index.php");
+        exit();
+    }
+
+    $sql = "SELECT `fileName`, `description`, `tags` FROM `images` WHERE `id` = $imageID";
+
+    $result = mysqli_query($conn, $sql);
+    
+    if (!$result) {
+        die("Erro na consulta: " . mysqli_error($conn));
+    }
+    
+    $row = mysqli_fetch_assoc($result);
+    $fileName = $row['fileName'];
+    $description = $row['description'];
+    $tags = $row['tags'];
+    
+    mysqli_free_result($result);
+    
+    mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +53,12 @@
 </head>
 <body>
     <div>
-        <div>
-            <img class="max-w-sm" src="public/images/uploads/1388e836cca6aab2b1d6e8616d334591.jpg">
-        </div>
-        <div>
-            <span>Test</span>
-        </div>
+        <?php
+        echo "<img src=\"$fileName\" alt=\"Imagem\">";
+        echo "<h1>$description</h1>";
+        echo "<div class='center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white'>
+        <div class='mt-px'>$tags</div></div>"
+        ?>
     </div>
 </body>
 </html>
