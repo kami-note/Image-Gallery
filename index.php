@@ -1,5 +1,7 @@
 <?php
     include 'controller.php';
+    include 'config.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +85,9 @@
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="image-item">';
+                    echo '<a href="image.php?imageid=' . $row['id'] . '">';
                     echo '<img src="' . $row['filename'] . '" alt="Image">';
+                    echo '</a>';
                     echo '</div>';
                 }
             } else {
