@@ -1,0 +1,52 @@
+#image-container {
+    margin: 20px auto;
+    max-width: 1200px;
+    columns: 5;
+    column-gap: 20px;
+}
+
+.image-item {
+    break-inside: avoid-column;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-item img {
+    width: 100%;
+    display: block;
+    max-width: 250px;
+}
+
+@media (max-width: 767px) {
+    #image-container {
+        columns: 1; /* Display in a single column on mobile */
+        column-gap: 0; /* Remove the column gap on mobile */
+    }
+
+    .image-item {
+        margin-bottom: 10px; /* Adjust margin for better spacing on mobile */
+    }
+
+    .image-item img {
+        max-width: 100%; /* Ensure images take the full width on mobile */
+    }
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a.active {
+    background-color: #4caf50;
+    color: white;
+}
