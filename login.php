@@ -2,10 +2,11 @@
 session_start();
 include('db.php');
 
+$error_message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $clientName = $_POST["user"];
-    $clientPassword = $_POST["password"];
-
+    $clientPassword = $_POST["password"] = hash('sha256', $_POST["password"]);
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Check the connection
@@ -25,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: index.php");
         exit();
     } else {
-        echo "Invalid credentials. Please try again.";
+        $error_message = "Invalid credentials. Please try again.";
     }
 
     $stmt->close();
@@ -64,11 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <button class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full" type="submit" style="transition: all 0.15s ease 0s;">Sign In</button>
                                 </div>
                             </form>
+                            <div class="flex flex-wrap mt-6">
+                                <div class="w-1/2"><a href="#" class="text-gray-300"><small>Forgot password?</small></a></div>
+                                <div class="w-1/2 text-right"><a href="#" class="text-gray-300"><small>Create new account</small></a></div>
+                                <p class="text-red-500"><?php echo $error_message; ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex flex-wrap mt-6">
-                        <div class="w-1/2"><a href="#" class="text-gray-300"><small>Forgot password?</small></a></div>
-                        <div class="w-1/2 text-right"><a href="#" class="text-gray-300"><small>Create new account</small></a></div>
                     </div>
                 </div>
             </div>
