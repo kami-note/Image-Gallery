@@ -56,8 +56,14 @@
         <?php
         echo "<img src=\"$fileName\" alt=\"Imagem\">";
         echo "<h1>$description</h1>";
-        echo "<div class='center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white'>
-        <div class='mt-px'>$tags</div></div>"
+
+        $tagArray = explode(', ', $tags);
+
+        foreach ($tagArray as $tag) {
+            echo "<div class='center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white'>";
+            echo "<div class='mt-px'>$tag</div>";
+            echo "</div>";
+        }
         ?>
     </div>
 </body>

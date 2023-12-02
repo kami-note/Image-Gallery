@@ -14,8 +14,23 @@ if (file_exists('../db.php')) {
         die("Falha na conexão com o banco de dados: " . $conn->connect_error);
     }
 
+    // Cria a tabela 'user' se ela não existir
+    $sql_user = "CREATE TABLE IF NOT EXISTS user (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        content TEXT
+    )";
+
+    // Executa a query para criar a tabela 'user'
+    if ($conn->query($sql_user) === TRUE) {
+        echo "Tabela 'user' criada com sucesso.";
+    } else {
+        echo "Erro ao criar a tabela 'user': " . $conn->error;
+    }
+
     // Cria a tabela 'images' se ela não existir
-    $sql = "CREATE TABLE IF NOT EXISTS images (
+    $sql_images = "CREATE TABLE IF NOT EXISTS images (
         id INT AUTO_INCREMENT PRIMARY KEY,
         directory VARCHAR(255) NOT NULL,
         description TEXT,
@@ -26,11 +41,11 @@ if (file_exists('../db.php')) {
         type VARCHAR(255) NULL
     )";
     
-
-    if ($conn->query($sql) === TRUE) {
+    // Executa a query para criar a tabela 'images'
+    if ($conn->query($sql_images) === TRUE) {
         echo "Tabela 'images' criada com sucesso.";
     } else {
-        echo "Erro ao criar a tabela: " . $conn->error;
+        echo "Erro ao criar a tabela 'images': " . $conn->error;
     }
 
     // Fecha a conexão com o banco de dados
