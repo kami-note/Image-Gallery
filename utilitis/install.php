@@ -32,9 +32,9 @@ if (file_exists('../db.php')) {
     // Cria a tabela 'images' se ela não existir
     $sql_images = "CREATE TABLE IF NOT EXISTS images (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        directory VARCHAR(255) NOT NULL,
+        filename VARCHAR(255) NOT NULL,
         description TEXT,
-        tag VARCHAR(255),
+        tags VARCHAR(255),
         view INT DEFAULT 0,
         `like` INT DEFAULT 0,
         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
