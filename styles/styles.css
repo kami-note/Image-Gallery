@@ -1,6 +1,6 @@
 #image-container {
-    margin: 20px auto;
-    max-width: 1200px;
+    margin: 20px;
+    max-width: 100%;
     columns: 5;
     column-gap: 20px;
 }
@@ -16,20 +16,22 @@
     width: 100%;
     display: block;
     max-width: 250px;
+    min-width: 200px; /* Defina um valor mínimo de largura */
 }
 
 @media (max-width: 767px) {
     #image-container {
-        columns: 1; /* Display in a single column on mobile */
-        column-gap: 0; /* Remove the column gap on mobile */
+        columns: 1;
+        column-gap: 0;
     }
 
     .image-item {
-        margin-bottom: 10px; /* Adjust margin for better spacing on mobile */
+        margin-bottom: 10px;
     }
 
     .image-item img {
-        max-width: 100%; /* Ensure images take the full width on mobile */
+        max-width: 450px;
+        min-width: 300px; /* Defina um valor mínimo de largura */
     }
 }
 

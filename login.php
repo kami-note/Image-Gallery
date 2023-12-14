@@ -44,34 +44,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <section class="absolute w-full h-full top-0">
-        <div class="absolute top-0 w-full h-full bg-orange-200" style="background-image: url('https://demos.creative-tim.com/tailwindcss-starter-project/static/media/register_bg_2.2fee0b50.png'); background-size: 100%; background-repeat: no-repeat;"></div>
-        <div class="container mx-auto px-4 h-full">
-            <div class="flex content-center items-center justify-center h-full">
-                <div class="w-full lg:w-4/12 px-4 pt-32">
-                    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
-                        <div class="flex-auto px-4 mt-5 lg:px-10 py-10 pt-0">
-                            <div class="text-gray-500 text-center mb-3 font-bold"><small>Sign in with credentials</small></div>
-                            <form method="post">
-                                <div class="relative w-full mb-3">
-                                    <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="grid-user">User</label>
-                                    <input type="text" name="user" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full" placeholder="User" style="transition: all 0.15s ease 0s;">
-                                </div>
-                                <div class="relative w-full mb-3">
-                                    <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="grid-password">Password</label>
-                                    <input type="password" name="password" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full" placeholder="Password" style="transition: all 0.15s ease 0s;">
-                                </div>
-                                <div class="text-center mt-6">
-                                    <button class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full" type="submit" style="transition: all 0.15s ease 0s;">Sign In</button>
-                                </div>
-                            </form>
-                            <div class="flex flex-wrap mt-6">
-                                <div class="w-1/2"><a href="#" class="text-gray-300"><small>Forgot password?</small></a></div>
-                                <div class="w-1/2 text-right"><a href="#" class="text-gray-300"><small>Create new account</small></a></div>
-                                <p class="text-red-500"><?php echo $error_message; ?></p>
-                            </div>
-                        </div>
-                    </div>
+    <section class="container mx-auto flex h-screen items-center justify-center">
+        <div class="w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 bg-neutral-light p-4 md:p-8 rounded-lg shadow-lg">
+            <h2 class="text-neutral-dark text-center text-lg md:text-xl font-semibold mb-4">Sign in with credentials</h2>
+            <form method="post">
+                <div class="mb-3 md:mb-4">
+                    <label for="user" class="block text-neutral-dark text-sm font-semibold mb-1 md:mb-2">User</label>
+                    <input type="text" name="user" id="user" required class="w-full px-3 py-2 placeholder-neutral-light text-neutral-dark bg-white rounded focus:outline-none focus:shadow-outline" placeholder="User">
+                </div>
+                <div class="mb-3 md:mb-4">
+                    <label for="password" class="block text-neutral-dark text-sm font-semibold mb-1 md:mb-2">Password</label>
+                    <input type="password" name="password" id="password" required class="w-full px-3 py-2 placeholder-neutral-light text-neutral-dark bg-white rounded focus:outline-none focus:shadow-outline" placeholder="Password">
+                </div>
+                <div class="text-center">
+                    <button class="bg-neutral-darker text-neutral-dark active:bg-neutral-dark text-sm font-semibold uppercase px-4 md:px-6 py-2 md:py-3 rounded shadow hover:shadow-lg focus:outline-none focus:shadow-outline w-full" type="submit">Sign In</button>
+                </div>
+            </form>
+            <p class="text-error text-center mt-3 md:mt-4"><?php echo $error_message; ?></p>
+            <div class="flex flex-wrap mt-4 md:mt-6">
+                <div class="w-full md:w-1/2 text-center md:text-left mb-2 md:mb-0">
+                    <a href="#" class="text-neutral-medium text-sm">Forgot password?</a>
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-right">
+                    <a href="#" class="text-neutral-medium text-sm">Create new account</a>
                 </div>
             </div>
         </div>

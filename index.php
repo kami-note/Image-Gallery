@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     include 'controller.php';
     include 'config.php';
 
@@ -12,7 +14,6 @@
     <title>Image Gallery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="scripts/alpinejs.js" defer></script>
-    <script src="scripts/masonry.pkgd.min.js"></script>
     <script src="scripts/init.js"></script>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -36,41 +37,52 @@
                 </button>
             </form>
         </div>
+        <div>
+            <?php if (isset($_SESSION['username'])): ?>
+                <a href="logout.php">Logout</a>
+            <?php else: ?>
+                <a href="login.php">Log in</a>
+            <?php endif; ?>
+        </div>
     </header>
     <div class="mx-auto p-4">
         <h1 class="text-2xl font-semibold mb-4">Image Gallery</h1>
-        <div x-data="{ isOpen: false }">
-            <button @click="isOpen = true" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                Add New Image
-            </button>
-            <div x-show="isOpen" @click="isOpen = false" class="fixed inset-0 bg-black opacity-50 z-50"></div>
-            <div x-show="isOpen" class="fixed inset-0 flex items-center justify-center z-50">
-                <div class="bg-white p-6 rounded-md shadow-md max-w-md relative">
-                    <h2 class="text-2xl font-semibold mb-4">Add New Image:</h2>
-                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data" id="uploadForm">
-                        <div class="mb-4">
-                            <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
-                            <input type="file" name="file" id="file" accept="image/*" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
-                        </div>
+        <?php if (isset($_SESSION['username'])): ?>
+            <div x-data="{ isOpen: false }">
+                <button @click="isOpen = true" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                    Add New Image
+                </button>
+                <div x-show="isOpen" @click="isOpen = false" class="fixed inset-0 bg-black opacity-50 z-50"></div>
+                <div x-show="isOpen" class="fixed inset-0 flex items-center justify-center z-50">
+                    <div class="bg-white p-6 rounded-md shadow-md max-w-md relative">
+                        <h2 class="text-2xl font-semibold mb-4">Add New Image:</h2>
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data" id="uploadForm">
+                            <div class="mb-4">
+                                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+                                <input type="file" name="file" id="file" accept="image/*" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-                            <textarea name="description" id="description" class="border border-gray-300 p-2 w-full rounded-md resize-none focus:outline-none focus:border-blue-500"></textarea>
-                        </div>
+                            <div class="mb-4">
+                                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                                <textarea name="description" id="description" class="border border-gray-300 p-2 w-full rounded-md resize-none focus:outline-none focus:border-blue-500"></textarea>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tag:</label>
-                            <input type="text" name="tags" id="tags" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
-                        </div>
+                            <div class="mb-4">
+                                <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tag:</label>
+                                <input type="text" name="tags" id="tags" required class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:border-blue-500">
+                            </div>
 
-                        <div class="mt-4 flex justify-end">
-                            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" x-on:click="submitForm">Add Image</button>
-                            <button type="button" @click="isOpen = false" class="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none">Cancel</button>
-                        </div>
-                    </form>
+                            <div class="mt-4 flex justify-end">
+                                <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" x-on:click="submitForm">Add Image</button>
+                                <button type="button" @click="isOpen = false" class="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php else: ?>
+            <p class="text-red-500">You need to be logged in to upload images.</p>
+        <?php endif; ?>
         <div class="mt-4">
             <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <label for="filter">Filter by:</label>
@@ -80,20 +92,22 @@
                 </select>
             </form>
         </div>
-        <div id="image-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="image-item">';
-                    echo '<a href="image.php?imageid=' . $row['id'] . '">';
-                    echo '<img src="' . $row['filename'] . '" alt="Image">';
-                    echo '</a>';
-                    echo '</div>';
+        <div class="content-container">
+            <div id="image-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<div class="image-item">';
+                        echo '<a href="image.php?imageid=' . $row['id'] . '">';
+                        echo '<img src="' . $row['filename'] . '" alt="Image">';
+                        echo '</a>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "No records found.";
                 }
-            } else {
-                echo "No records found.";
-            }
-            ?>
+                ?>
+            </div>
         </div>
         <div class="pagination mt-4">
             <?php
@@ -103,6 +117,7 @@
             ?>
         </div>
     </div>
+    <script src="scripts/masonry.pkgd.min.js"></script>
     <script src="scripts/terminate.js"></script>
 </body>
 </html>

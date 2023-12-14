@@ -35,6 +35,7 @@ if (file_exists('../db.php')) {
         filename VARCHAR(255) NOT NULL,
         description TEXT,
         tags VARCHAR(255),
+        `owner` VARCHAR(255) NOT NULL,
         view INT DEFAULT 0,
         `like` INT DEFAULT 0,
         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

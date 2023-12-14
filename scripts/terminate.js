@@ -10,5 +10,6 @@ function masonryInit(){
 // Run Masonry and modal initialization after the DOM has fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('uploadForm').reset();
-    masonryInit();
 });
+
+masonryInit();
